@@ -5,9 +5,8 @@ module Serenity
   class Template
     attr_accessor :template
 
-    def initialize(template, output)
-      FileUtils.cp(template, output)
-      @template = output
+    def initialize(template)
+      FileUtils.cp(template)
     end
 
     def process context
