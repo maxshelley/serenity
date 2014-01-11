@@ -12,7 +12,7 @@ module Serenity
 
     def process context
       tmpfiles = []
-      Zip::File.open(@template) do |zipfile|
+      Zip::File.open('new_template.odt', Zip::File::CREATE) do |zipfile|
         %w(content.xml styles.xml).each do |xml_file|
           content = zipfile.read(xml_file)
           odteruby = OdtEruby.new(XmlReader.new(content))
@@ -23,7 +23,8 @@ module Serenity
           file << out
           file.close
 
-          zipfile.replace(xml_file, file.path)
+          file
+          #zipfile.replace(xml_file, file.path)
         end
       end
     end
