@@ -14,12 +14,11 @@ module Serenity
 
       tmpfiles = []
       Zip::File.open(@template) do |zipfile|
-        %w(content.xml).each do |xml_file|
+        %w(content.xml styles.xml).each do |xml_file|
           content = zipfile.read(xml_file)
-          content = content.force_encoding('UTF-8')
           odteruby = OdtEruby.new(XmlReader.new(content))
           out = odteruby.evaluate(context)
-          #out.force_encoding Encoding.default_external.to_s
+          out.force_encoding Encoding.default_external.to_s
 
           tmpfiles << (file = Tempfile.new("serenity"))
           file << out
